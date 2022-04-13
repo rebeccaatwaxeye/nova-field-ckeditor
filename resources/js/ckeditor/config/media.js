@@ -15,7 +15,7 @@ export default {
                 ],
                 html: match => `
                         <div class="embed-responsive embed-responsive-16by9">
-                            <iframe src="https://www.youtube.com/embed/${match[1]}" class="embed-responsive-item" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/${match[ 1 ]}" class="embed-responsive-item" allowfullscreen></iframe>
                         </div>
                    `
             },

@@ -1,4 +1,6 @@
-<?php namespace BayAreaWebPro\NovaFieldCkEditor;
+<?php
+
+namespace BayAreaWebPro\NovaFieldCkEditor;
 
 use Laravel\Nova\Fields\Expandable;
 use Laravel\Nova\Fields\Field;
@@ -30,33 +32,18 @@ class CkEditor extends Field
      * @var array $toolbar
      */
     public array $toolbar = [
-        'heading',
-        'horizontalLine',
-        '|',
-        'link',
-        'linkBrowser',
-        '|',
-        'bold',
-        'italic',
-        'alignment',
-        'subscript',
-        'superscript',
-        'underline',
-        'strikethrough',
-        '|',
-        'blockQuote',
-        'bulletedList',
-        'numberedList',
-        '|',
-        'insertTable',
-        'mediaBrowser',
-        'mediaEmbed',
-        '|',
-        'snippetBrowser',
-        'htmlEmbed',
-        '|',
-        'undo',
-        'redo'
+        'heading', '|',
+        'alignment', '|',
+        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+        'link', '|',
+        'bulletedList', 'numberedList', 'todoList',
+        '-', // break point
+        'fontfamily', 'fontsize', 'fontColor', '|',
+        'code', 'codeBlock', '|',
+        'insertTable', '|',
+        'outdent', 'indent', '|',
+        'mediaBrowser', 'blockQuote', '|',
+        'undo', 'redo'
     ];
 
     /**
@@ -134,11 +121,11 @@ class CkEditor extends Field
     {
         return array_merge(parent::jsonSerialize(), [
             'snippetBrowser' => $this->snippetBrowser,
-            'mediaBrowser'   => $this->mediaBrowser,
-            'linkBrowser'    => $this->linkBrowser,
-            'toolbar'        => $this->toolbar,
-            'height'         => $this->height,
-            'shouldShow'     => $this->shouldBeExpanded(),
+            'mediaBrowser' => $this->mediaBrowser,
+            'linkBrowser' => $this->linkBrowser,
+            'toolbar' => $this->toolbar,
+            'height' => $this->height,
+            'shouldShow' => $this->shouldBeExpanded(),
         ]);
     }
 }

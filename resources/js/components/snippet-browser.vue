@@ -1,6 +1,7 @@
 <script>
 /** @var Nova */
 import modal from './modal'
+
 export default {
     name: "snippet-browser",
     components: {modal},
@@ -56,20 +57,20 @@ export default {
 <template>
     <modal
         ref="modal"
-        title="Snippets"
-        v-model="isVisible">
+        v-model="isVisible"
+        title="Snippets">
         <div class="flex min-h-full">
             <div class="w-1/5">
                 <div
                     v-for="(snippet) in snippets"
-                    @click="selected = snippet.html"
+                    :class="{'snippet-selected': selected === snippet.html}"
                     class="snippet border-l-4 p-3 cursor-pointer"
-                    :class="{'snippet-selected': selected === snippet.html}">
+                    @click="selected = snippet.html">
                     <strong>{{ snippet.name }}</strong>
                 </div>
             </div>
             <div class="w-4/5 bg-white min-h-full p-8 relative">
-                <div v-html="selected" class="snippet-content"/>
+                <div class="snippet-content" v-html="selected" />
             </div>
         </div>
         <template v-slot:footer>
@@ -77,8 +78,8 @@ export default {
                 <div>
                     <button
                         :disabled="!selected"
-                        @click.prevent="insert(selected)"
-                        class="btn btn-default btn-primary items-center relative mr-3">
+                        class="btn btn-default btn-primary items-center relative mr-3"
+                        @click.prevent="insert(selected)">
                         Insert Snippet
                     </button>
                 </div>

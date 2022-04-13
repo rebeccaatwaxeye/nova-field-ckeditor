@@ -2,20 +2,20 @@
  * https://ckeditor.com/docs/ckeditor5/latest/features/image.html
  */
 export default {
-    image:{
+    image: {
         upload: {
-            types: ['gif','png','jpg','jpeg', 'webp']
+            types: ['gif', 'png', 'jpg', 'jpeg', 'webp']
         },
         toolbar: [
             'mediaBrowser',
-            'imageStyle:full',
+            'imageStyle:block',
             'imageStyle:alignLeft',
             'imageStyle:alignCenter',
             'imageStyle:alignRight',
             'imageTextAlternative',
         ],
         styles: [
-            'full',
+            'block',
             'alignLeft',
             'alignCenter',
             'alignRight',

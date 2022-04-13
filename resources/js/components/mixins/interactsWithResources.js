@@ -1,5 +1,5 @@
 export default {
-    methods:{
+    methods: {
         /**
          * Map Nova Resource to Normal Object Format Including Additional Properties.
          * @param resource {Object}
@@ -7,13 +7,13 @@ export default {
          */
         resourceToObject({fields}) {
             return fields.reduce((obj, item) => {
-                obj[item.attribute] = item.value
-                if(item.hasOwnProperty('thumbnailUrl')){
+                obj[ item.attribute ] = item.value
+                if (item.hasOwnProperty('thumbnailUrl')) {
                     obj.url = item.thumbnailUrl
-                }else if(item.hasOwnProperty('previewUrl')){
+                } else if (item.hasOwnProperty('previewUrl')) {
                     obj.url = item.previewUrl
                 }
-                if(item.hasOwnProperty('meta')){
+                if (item.hasOwnProperty('meta')) {
                     obj.meta = item.meta
                 }
                 return obj
@@ -25,10 +25,10 @@ export default {
          * @param id {String|Number}
          * @return {Promise<Array>}
          */
-        async fetchResourceEntity(resourceKey, id){
+        async fetchResourceEntity(resourceKey, id) {
             return await Nova.request()
                 .get(`/nova-api/${resourceKey}/${id}`)
-                .then(({data})=>this.resourceToObject(data.resource))
+                .then(({data}) => this.resourceToObject(data.resource))
                 .catch(this.handleResourceError)
         },
         /**
@@ -37,10 +37,10 @@ export default {
          * @param params {Object}
          * @return {Promise<Array>}
          */
-        async fetchResourceCollection(resourceKey, params){
+        async fetchResourceCollection(resourceKey, params) {
             return await Nova.request()
-                .get(`/nova-api/${resourceKey}`,{params})
-                .then(({data})=>data.resources.map((resource)=>this.resourceToObject(resource)))
+                .get(`/nova-api/${resourceKey}`, {params})
+                .then(({data}) => data.resources.map((resource) => this.resourceToObject(resource)))
                 .catch(this.handleResourceError)
         },
         /**
@@ -49,12 +49,12 @@ export default {
          * @param params {Object}
          * @return {Promise<Array>}
          */
-        async uploadResource(resourceKey, params){
+        async uploadResource(resourceKey, params) {
             const data = new FormData
-            Object.entries(params).forEach(([key,value])=>data.append(key, value))
+            Object.entries(params).forEach(([key, value]) => data.append(key, value))
             return await Nova.request()
-                .post(`/nova-api/${resourceKey}`,data)
-                .then(({data})=>data.resource)
+                .post(`/nova-api/${resourceKey}`, data)
+                .then(({data}) => data.resource)
                 .catch(this.handleResourceError)
         },
         /**
@@ -62,8 +62,8 @@ export default {
          * @param error {Error}
          * @return void
          */
-        handleResourceError(error){
-            this.$toasted.show(this.__(':message',{message:error}),{
+        handleResourceError(error) {
+            this.$toasted.show(this.__(':message', {message: error}), {
                 type: 'error'
             })
         }

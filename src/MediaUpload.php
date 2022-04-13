@@ -7,8 +7,8 @@ class MediaUpload extends Image
 {
     /**
      * Create a new field.
-     * @param  string  $name
-     * @param  string  $disk
+     * @param string $name
+     * @param string $disk
      * @return void
      */
     public function __construct(string $name, string $disk = 'public')

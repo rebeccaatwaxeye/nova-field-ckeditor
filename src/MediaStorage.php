@@ -2,17 +2,14 @@
 
 namespace BayAreaWebPro\NovaFieldCkEditor;
 
-use Throwable;
-
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image;
-
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
+use Throwable;
 
 class MediaStorage
 {
@@ -38,6 +35,20 @@ class MediaStorage
     public static function make(string $disk = 'media'): self
     {
         return app('ckeditor-media-storage', compact('disk'));
+    }
+
+    /**
+     * Get formatted bytes.
+     * @param int $bytes
+     * @return string
+     */
+    public static function bytesForHumans(int $bytes): string
+    {
+        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+        for ($i = 0; $bytes > 1024; $i++) {
+            $bytes /= 1024;
+        }
+        return round($bytes, 2) . ' ' . $units[$i];
     }
 
     /**
@@ -71,6 +82,28 @@ class MediaStorage
     }
 
     /**
+     * Perform Optimization Operations.
+     * @param string $tempPath
+     * @return int
+     * @throws Throwable
+     */
+    public function optimize(string $tempPath): int
+    {
+        ImageOptimizer::optimize($tempPath);
+        return filesize($tempPath);
+    }
+
+    /**
+     * Get the URL for the media file.
+     * @param string $file
+     * @return mixed
+     */
+    public function url(string $file)
+    {
+        return Storage::disk($this->disk)->url($file);
+    }
+
+    /**
      * Perform Resize & Conversion Operations.
      * @param UploadedFile $file
      * @return array
@@ -100,42 +133,6 @@ class MediaStorage
     }
 
     /**
-     * Perform Optimization Operations.
-     * @param string $tempPath
-     * @return int
-     * @throws Throwable
-     */
-    public function optimize(string $tempPath): int
-    {
-        ImageOptimizer::optimize($tempPath);
-        return filesize($tempPath);
-    }
-
-    /**
-     * Get formatted bytes.
-     * @param int $bytes
-     * @return string
-     */
-    public static function bytesForHumans(int $bytes): string
-    {
-        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
-        for ($i = 0; $bytes > 1024; $i++) {
-            $bytes /= 1024;
-        }
-        return round($bytes, 2) . ' ' . $units[$i];
-    }
-
-    /**
-     * Get the URL for the media file.
-     * @param string $file
-     * @return mixed
-     */
-    public function url(string $file)
-    {
-        return Storage::disk($this->disk)->url($file);
-    }
-
-    /**
      * @param UploadedFile $file
      * @return false|string
      */
@@ -158,6 +155,16 @@ class MediaStorage
     }
 
     /**
+     * Make target file path.
+     * @param string $name
+     * @return string
+     */
+    protected function makeTargetFilePath(string $name): string
+    {
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $name;
+    }
+
+    /**
      * @param UploadedFile $file
      * @param $maxWidth
      * @param $maxHeight
@@ -173,15 +180,5 @@ class MediaStorage
             });
         }
         return $image;
-    }
-
-    /**
-     * Make target file path.
-     * @param string $name
-     * @return string
-     */
-    protected function makeTargetFilePath(string $name): string
-    {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $name;
     }
 }

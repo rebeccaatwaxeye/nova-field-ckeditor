@@ -12,6 +12,9 @@
         "laravel/framework": "^8.0|^9.0",
         "spatie/laravel-image-optimizer": "^1.6"
     },
+    "require-dev": {
+        "laravel/nova": "~4.0"
+    },
     "autoload": {
         "psr-4": {
             "BayAreaWebPro\\NovaFieldCkEditor\\": "src/"
@@ -28,5 +31,11 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "nova": {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    }
 }

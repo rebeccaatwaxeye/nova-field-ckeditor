@@ -29,7 +29,7 @@ class FeaturedMedia extends Field
      * @param int $height
      * @return $this
      */
-    public function sizeOnIndex(int $width,int $height): self
+    public function sizeOnIndex(int $width, int $height): self
     {
         return $this->withMeta([
             'index_width' => $width,
@@ -43,7 +43,7 @@ class FeaturedMedia extends Field
      * @param int $height
      * @return $this
      */
-    public function sizeOnDetail(int $width,int $height): self
+    public function sizeOnDetail(int $width, int $height): self
     {
         return $this->withMeta([
             'detail_width' => $width,
@@ -57,7 +57,7 @@ class FeaturedMedia extends Field
      * @param int $height
      * @return $this
      */
-    public function sizeOnForms(int $width,int $height): self
+    public function sizeOnForms(int $width, int $height): self
     {
         return $this->withMeta([
             'form_width' => $width,

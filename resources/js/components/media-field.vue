@@ -3,22 +3,23 @@ import spinner from './../assets/spinner'
 import MediaBrowser from "./media-browser"
 import HasUUID from "./mixins/HasUUID"
 import interactsWithResources from "./mixins/interactsWithResources"
-import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import {FormField, HandlesValidationErrors} from 'laravel-nova'
+
 export default {
     props: ['resourceName', 'resourceId', 'field'],
-    mixins: [FormField, HandlesValidationErrors,interactsWithResources, HasUUID],
+    mixins: [FormField, HandlesValidationErrors, interactsWithResources, HasUUID],
     components: {MediaBrowser},
-    data: ()=>({preview: null}),
+    data: () => ({preview: null}),
     computed: {
-        event(){
+        event() {
             return `ckeditor:media:${this.$options.uuid}`
         },
     },
     methods: {
         setInitialValue() {
-            this.value = this.field.value  || null
-            if(this.field.value){
-                this.fetchResourceEntity('media',this.field.value).then(({url})=>{
+            this.value = this.field.value || null
+            if (this.field.value) {
+                this.fetchResourceEntity('media', this.field.value).then(({url}) => {
                     this.preview = url
                 })
             }
@@ -38,50 +39,50 @@ export default {
             Nova.$emit(this.event)
         },
     },
-    created(){
+    created() {
         this.$options.spinner = spinner
         this.$options.uuid = this.uuid()
         Nova.$on(`${this.event}:write`, this.handleChange)
     },
-    beforeDestroy(){
+    beforeDestroy() {
         Nova.$off(`${this.event}:write`, this.handleChange)
     }
 }
 </script>
 <template>
-    <default-field :field="field" :errors="errors">
+    <default-field :errors="errors" :field="field">
         <template slot="field">
             <template v-if="preview">
                 <v-lazy-image
                     :src="preview"
                     :src-placeholder="$options.spinner"
-                    class="shadow-md rounded mb-4 block"
                     :style="{
                         width: 'auto',
                         height: 'auto',
                         maxWidth: `${field.form_width}px`,
                         maxHeight: `${field.form_height}px`
                     }"
+                    class="shadow-md rounded mb-4 block"
                 />
                 <button
+                    class="btn btn-default btn-primary inline-flex items-center relative"
                     type="button"
-                    @click.prevent="clearSelected"
-                    class="btn btn-default btn-primary inline-flex items-center relative">
+                    @click.prevent="clearSelected">
                     Remove
                 </button>
             </template>
 
             <button
                 v-else
+                class="btn btn-default btn-primary inline-flex items-center relative"
                 type="button"
-                @click.prevent="openBrowser"
-                class="btn btn-default btn-primary inline-flex items-center relative">
+                @click.prevent="openBrowser">
                 Select
             </button>
             <p v-if="hasError" class="my-2 text-danger">
                 {{ firstError }}
             </p>
-            <media-browser :field-key="$options.uuid" :multiple="false"/>
+            <media-browser :field-key="$options.uuid" :multiple="false" />
         </template>
     </default-field>
 </template>

@@ -2,6 +2,8 @@
 
 // Base Editor
 import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+
 
 // Block Elements
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline'
@@ -10,11 +12,11 @@ import Table from '@ckeditor/ckeditor5-table/src/table'
 
 // Block Elements
 import AutoFormat from '@ckeditor/ckeditor5-autoformat/src/autoformat'
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials'
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote'
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph'
 import Heading from '@ckeditor/ckeditor5-heading/src/heading'
-import List from '@ckeditor/ckeditor5-list/src/list'
+import {List, TodoList} from '@ckeditor/ckeditor5-list'
+import {Indent} from "@ckeditor/ckeditor5-indent";
 
 // Styles & Enhancements
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'
@@ -25,7 +27,10 @@ import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline'
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic'
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold'
+import Code from '@ckeditor/ckeditor5-basic-styles/src/code'
+import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock'
 import Link from '@ckeditor/ckeditor5-link/src/link'
+import {FontBackgroundColor, FontColor, FontFamily, FontSize} from "@ckeditor/ckeditor5-font";
 
 // Images and Media
 import Image from '@ckeditor/ckeditor5-image/src/image'
@@ -44,7 +49,7 @@ import SnippetBrowser from './plugins/SnippetBrowser'
 export default class CkEditor extends ClassicEditorBase {
 
     // Merge Configurations
-    static get defaultConfig(){
+    static get defaultConfig() {
         return {
             licenseKey: '',
             language: 'en',
@@ -59,7 +64,7 @@ export default class CkEditor extends ClassicEditorBase {
     }
 
     // Add Plugins
-    static get builtinPlugins(){
+    static get builtinPlugins() {
         return [
             MediaBrowser,
             LinkBrowser,
@@ -67,11 +72,16 @@ export default class CkEditor extends ClassicEditorBase {
             Essentials,
             Link,
             List,
+            TodoList,
             Heading,
             Paragraph,
             BlockQuote,
             PasteFromOffice,
             HorizontalLine,
+            FontFamily,
+            FontSize,
+            FontColor,
+            FontBackgroundColor,
             Bold,
             Italic,
             Underline,
@@ -80,6 +90,8 @@ export default class CkEditor extends ClassicEditorBase {
             AutoFormat,
             Superscript,
             StrikeThrough,
+            Code,
+            CodeBlock,
             Image,
             ImageStyle,
             ImageUpload,
@@ -90,6 +102,7 @@ export default class CkEditor extends ClassicEditorBase {
             Table,
             TableToolbar,
             HtmlEmbed,
+            Indent
         ]
     }
 }

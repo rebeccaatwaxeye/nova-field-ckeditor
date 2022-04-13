@@ -1,7 +1,7 @@
 <script>
-    export default {
-        props: ['resource', 'resourceName', 'resourceId', 'field'],
-    }
+export default {
+    props: ['resource', 'resourceName', 'resourceId', 'field'],
+}
 </script>
 <template>
     <panel-item :field="field">
@@ -9,16 +9,16 @@
             <div class="ckeditor_content">
                 <excerpt
                     :content="field.value"
-                    :should-show="field.shouldShow"
                     :plain-text="false"
+                    :should-show="field.shouldShow"
                 />
             </div>
         </template>
     </panel-item>
 </template>
 <style lang="sass">
-    .ckeditor_content
-        @import "./../../sass/figures.sass"
-        @import "./../../sass/blocks.sass"
+.ckeditor_content
+    @import "./../../sass/figures.sass"
+    @import "./../../sass/blocks.sass"
 </style>
 
