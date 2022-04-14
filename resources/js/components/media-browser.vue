@@ -67,9 +67,10 @@ export default {
             const uploads = []
             const requests = ([...dataTransfer.files]).map(file => {
                 return this.uploadResource('media', {file}).then((item) => {
-                    this.$toasted.show(this.__('Complete: :file', item), {
-                        type: 'success'
-                    })
+                    // this.$toasted.show(this.__('Complete: :file', item), {
+                    //     type: 'success'
+                    // })
+                    Nova.success('Complete: ' + item.file)
                     uploads.push(item)
                 })
             })
@@ -159,9 +160,10 @@ export default {
 }
 </script>
 <template>
-    <modal ref="modal"
-           v-model="isVisible"
-           title="Media">
+    <modal
+        ref="modal"
+        v-model="isVisible"
+        title="Media">
         <template v-slot:header>
             <div class="pl-6 flex -mx-2">
                 <div class="p-2">
@@ -218,7 +220,7 @@ export default {
             <div
                 v-else-if="items.length"
                 ref="scrollable"
-                class="h-full w-full overflow-y-scroll"
+                class="w-full"
                 @scroll="onScroll"
                 @dragover.prevent=""
                 @drop.prevent="handleUploads">
@@ -227,13 +229,14 @@ export default {
                         v-for="item in items"
                         :key="item.hash" class="text-center p-1 cursor-pointer w-1/6 flex"
                         @click="select(item)">
-                        <v-lazy-image
+                        <img
                             :key="item.id"
+                            :alt="item.title"
                             :class="{'media-image-selected': isSelected(item)}"
                             :src="item.url"
                             :src-placeholder="$options.spinner"
                             class="media-image rounded shadow bg-white self-center mx-auto"
-                        />
+                            loading="lazy" />
                     </div>
                 </div>
             </div>
@@ -290,4 +293,10 @@ export default {
     opacity: 0
     transition: all 100ms ease-in-out !important
     transform: scale(0)
+
+.w-1\/6
+    width: 16.666667%
+
+img
+    object-fit: contain
 </style>

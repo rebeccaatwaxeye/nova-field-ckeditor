@@ -7,13 +7,13 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.0|^9.0",
         "spatie/laravel-image-optimizer": "^1.6"
     },
     "require-dev": {
-        "laravel/nova": "~4.0"
+        "laravel/nova": "~4.2"
     },
     "autoload": {
         "psr-4": {

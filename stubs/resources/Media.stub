@@ -49,6 +49,7 @@ class Media extends Resource
 
             Text::make('Filename', 'file')
                 ->displayUsing(fn($file) => Str::limit($file, 20))
+                ->onlyOnDetail()
                 ->sortable(),
 
             Text::make('Hash')
