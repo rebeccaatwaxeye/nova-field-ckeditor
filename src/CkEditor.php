@@ -43,7 +43,7 @@ class CkEditor extends Field
         'insertTable', '|',
         'outdent', 'indent', '|',
         'mediaBrowser', 'blockQuote', '|',
-        'undo', 'redo'
+        'undo', 'redo', '|', 'sourceEditing'
     ];
 
     /**
