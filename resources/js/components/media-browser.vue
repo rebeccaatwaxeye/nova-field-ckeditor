@@ -57,6 +57,11 @@ export default {
                     this.isLoading = false
                 })
         },
+
+        handleBrowseUpload(f) {
+            this.handleUploads({dataTransfer: f.target})
+        },
+
         /**
          * Handle Dropped File Uploads
          * @param dataTransfer {DataTransfer}
@@ -217,13 +222,12 @@ export default {
                 </div>
                 <p>Optimizing & Uploading to Storage...</p>
             </div>
-            <div
-                v-else-if="items.length"
-                ref="scrollable"
-                class="w-full"
-                @scroll="onScroll"
-                @dragover.prevent=""
-                @drop.prevent="handleUploads">
+            <div v-else-if="items.length"
+                 ref="scrollable"
+                 class="w-full"
+                 @scroll="onScroll"
+                 @dragover.prevent=""
+                 @drop.prevent="handleUploads">
                 <div class="flex flex-row flex-wrap justify-center content-center mb-12">
                     <div
                         v-for="item in items"
@@ -250,12 +254,18 @@ export default {
         <template v-slot:footer>
             <div class="flex p-2">
                 <div>
-                    <button
-                        :disabled="!selected.length"
-                        class="btn btn-default btn-primary items-center relative mr-3"
-                        @click.prevent="insert">
+                    <button :disabled="!selected.length"
+                            class="flex justify-center shadow relative bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-900 w-full flex justify-center cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring inline-flex items-center justify-center h-9 px-3 w-full flex justify-center shadow relative bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-900 w-full flex justify-center"
+                            @click.prevent="insert">
                         {{ selected.length < 2 ? 'Choose Image' : `Insert ${selected.length} Images` }}
                     </button>
+                </div>
+                <div>
+                    <label
+                        class="ml-3 flex justify-center shadow relative bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-900 w-full flex justify-center cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring inline-flex items-center justify-center h-9 px-3 w-full flex justify-center shadow relative bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-900 flex justify-center">
+                        <input class="hidden" type="file" accept="image/*" @change=handleBrowseUpload />
+                        Browse file
+                    </label>
                 </div>
                 <div v-if="selected.length > 1" class="flex-grow text-white self-center">
                     {{ selected.length }} Items Selected
@@ -299,4 +309,8 @@ export default {
 
 img
     object-fit: contain
+
+.media-image input[type="file"]
+    display: none
 </style>
+
