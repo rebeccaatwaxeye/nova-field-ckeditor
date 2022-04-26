@@ -15,6 +15,17 @@ class CkEditor extends Field
      */
     public $component = 'ckeditor';
 
+    public function __construct($name, $attribute = null, callable $resolveCallback = null)
+    {
+        parent::__construct($name, $attribute, $resolveCallback);
+
+        $this->toolbar = config('nova-ckeditor.default_ck_toolbar',
+            ['bold', 'italic', 'strikethrough', 'underline']);
+
+        $this->codeBlock = config('nova-ckeditor.default_ck_code_block',
+            [['language' => 'plaintext', 'label' => 'Plain Text']]);
+    }
+
     /**
      * Indicates whether the media browser should be available.
      * @var bool $mediaBrowser
@@ -31,20 +42,13 @@ class CkEditor extends Field
      * Specifies the available toolbar items.
      * @var array $toolbar
      */
-    public array $toolbar = [
-        'heading', '|',
-        'alignment', '|',
-        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
-        'link', '|',
-        'bulletedList', 'numberedList', 'todoList',
-        '-', // break point
-        'fontfamily', 'fontsize', 'fontColor', '|',
-        'code', 'codeBlock', '|',
-        'insertTable', '|',
-        'outdent', 'indent', '|',
-        'mediaBrowser', 'blockQuote', '|',
-        'undo', 'redo', '|', 'sourceEditing'
-    ];
+    public array $toolbar = [];
+
+    /**
+     * Specifies the available code styles in the code block.
+     * @var array $codeBlock
+     */
+    public array $codeBlock = [];
 
     /**
      * Indicates whether the link browser should be available.
@@ -66,6 +70,17 @@ class CkEditor extends Field
     public function toolbar(array $items): self
     {
         $this->toolbar = $items;
+        return $this;
+    }
+
+    /**
+     * Set the code styles item layout.
+     * @param array $items
+     * @return $this
+     */
+    public function codeBlock(array $items): self
+    {
+        $this->codeBlock = $items;
         return $this;
     }
 
@@ -124,6 +139,7 @@ class CkEditor extends Field
             'mediaBrowser' => $this->mediaBrowser,
             'linkBrowser' => $this->linkBrowser,
             'toolbar' => $this->toolbar,
+            'codeBlock' => $this->codeBlock,
             'height' => $this->height,
             'shouldShow' => $this->shouldBeExpanded(),
         ]);

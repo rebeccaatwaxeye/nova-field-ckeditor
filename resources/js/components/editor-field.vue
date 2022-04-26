@@ -47,7 +47,8 @@ export default {
             linkBrowser: this.field.linkBrowser,
             mediaBrowser: this.field.mediaBrowser,
             snippetBrowser: this.field.snippetBrowser,
-            toolbar: {items: this.field.toolbar, shouldNotGroupWhenFull: true}
+            toolbar: {items: this.field.toolbar, shouldNotGroupWhenFull: true},
+            codeBlock: {languages: this.field.codeBlock}
         }).then((editor) => {
             const {editing, model} = this.editor = editor
 
