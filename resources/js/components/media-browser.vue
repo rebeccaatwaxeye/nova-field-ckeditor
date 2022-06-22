@@ -12,6 +12,7 @@ export default {
     props: {
         fieldKey: {default: () => 'content'},
         multiple: {default: () => true},
+        relativeUrl: {default: () => true},
     },
     data: () => ({
         items: [],
@@ -48,6 +49,15 @@ export default {
                 ckeditor: 'media',
             })
                 .then((entities) => {
+                    // Make url relative.
+                    if (this.relativeUrl) {
+                        const stringToRemove = window.location.origin
+                        entities.forEach((item, index, arr) => {
+                            item.url = item.url.replace(stringToRemove, '')
+                            arr[ index ] = item
+                        })
+                    }
+
                     this.items = newPage > 1 ? this.items.concat(entities) : entities
                     if (entities.length) {
                         this.page = newPage
@@ -95,6 +105,7 @@ export default {
          * Emit Write Event to Field Component
          */
         insert() {
+            console.log('insert-', this.selected)
             Nova.$emit(`${this.event}:write`, this.multiple ? this.selected : this.selected[ 0 ])
             this.selected = []
             this.isVisible = false
